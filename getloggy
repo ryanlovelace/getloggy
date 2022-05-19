@@ -1,0 +1,25 @@
+#!/bin/bash
+
+COUNT=10
+
+declare -a sysloglevels=( "emerg" "alert" "crit" "err" "warning" "notice" "info" "debug" )
+
+declare -a syslogfacilities=( "auth" "authpriv" "cron" "daemon" "ftp" "kern" "lpr" "mail" "news" "syslog" "user" "uucp" "local0" "local1" "local2" "local3" "local4" "local5" "local6" "local7" "security" )
+
+for level in "${sysloglevels[@]}"
+do
+   : 
+   echo $level
+   
+   for facility in "${syslogfacilities[@]}"
+   do
+      :
+      x=1
+      while [ $x -le $COUNT ]
+      do
+         logger -n 127.0.0.1  -p "$facility.$level" --rfc3164 "This is a ($facility.$level) Log Message"
+         x=$(( $x + 1 ))
+      done
+   done
+done
+
